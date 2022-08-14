@@ -1,0 +1,16 @@
+function doGet(req)
+{
+  var doc = SpreadsheetApp.getActiveSpreadsheet();
+  var sheet = doc.getSheetByName("workout-data");
+  var values = sheet.getDataRange().getValues();
+
+  var outputdata = [];
+  for(var i = 0; i<values.length; i++)
+  {
+    var row = {};
+    row['id'] = values[i][0];
+    row['Workout Name'] = values[i][1];
+    outputdata.push(row);
+  }
+  return ContentService.createTextOutput(JSON.stringify({data:outputdata})).setMimeType(ContentService.MimeType.JSON);
+}
